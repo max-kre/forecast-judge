@@ -7,7 +7,12 @@ import glob
 from ForecastData import ForecastData
 import sqlalchemy as sqal
 from sqlalchemy.orm import sessionmaker, declarative_base
-
+'''
+TODO: 
+1. detect double commits to database and handle without error
+2. collect data
+3. start building a metric to evaluate forecast-goodness
+'''
 REGEX =  re.compile('\n^(.*?):(.*?)$|,', re.MULTILINE)
 TIMESTAMP_FORMAT = "%Y%m%d-%H%M%S"
 LOC_TO_COORDS = {'München': (48.1212, 11.5648),}
