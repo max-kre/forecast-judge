@@ -1,0 +1,9 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "pylint.args": [
+        "--disable=C0103"
+    ],
+    "ruff.lint.args": [
+        "--line-length=100"
+      ],
+}
