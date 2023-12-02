@@ -10,6 +10,7 @@ class ForecastData(base):
     provider = sqal.Column('provider', sqal.String)
     xcoord = sqal.Column('xcoord', sqal.Float)
     ycoord = sqal.Column('ycoord', sqal.Float)
+    forecastdelta = sqal.Column('forecastdelta', sqal.Float)
     temperature = sqal.Column('temperature', sqal.Float)
     windGustsKmh = sqal.Column('windGustsKmh', sqal.Float)
     airPressure = sqal.Column('airPressure', sqal.Float)

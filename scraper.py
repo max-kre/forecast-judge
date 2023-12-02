@@ -1,3 +1,4 @@
+import json
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -108,14 +109,37 @@ class ScrapeWeatherOnline(ScrapeBase):
         hdict.pop('hour')
         return hdict
 
+class ScrapeYrNo(ScrapeBase):
+
+    def __init__(self):
+        self.provider = 'YrNo'
+        self.loc = 'München'
+        self.url='https://www.yr.no/en/forecast/daily-table/2-2867714/'
+        super().__init__(self.loc, self.provider, self.url)
+
+    def prepareSoup(self):
+        scripts = self.soup.find_all('script')
+        data = [x.string for x in scripts if x.string and x.string.startswith('\n    window.__LOCALE_CODE__ ')][0]
+        data = re.search('window.__REACT_QUERY_STATE__ = JSON.parse(.*)',data)
+        if data:
+            data = data.group(1)
+            data = data[2:-3] # abschneiden von (" am anfang und ") am ende
+            data = data.replace('\\"', '"') \
+                    .replace('\\\\', '') \
+                    .replace('"[', '[') \
+                    .replace(']"', ']')
+            data = json.loads(data)
+        return data or None
+    
 
 if __name__ == '__main__':
-    scraper = ScrapeWeatherOnline()
+    scraper = ScrapeYrNo()
     scraper.getData(download=False)
-
+    data = scraper.prepareSoup()
+    data
     
-    scraper.prepareSoup()
-    scraper.parseHourlies()
+    # scraper.prepareSoup()
+    # scraper.parseHourlies()
 
     # temperature = int([t.find_all('div', attrs={'class':'value'}) for t in temp][0][0].contents[0])
     # print(temperature)
