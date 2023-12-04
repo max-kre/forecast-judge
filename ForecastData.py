@@ -53,6 +53,7 @@ class ForecastData(base):
     def __repr__(self):
 
         return f"{self.date}"
+
     @staticmethod
     def Init(engine):
         base.metadata.create_all(bind=engine)
@@ -61,7 +62,3 @@ if __name__ == '__main__':
     engine = sqal.create_engine("sqlite:///res//mydb.db", echo=True)
     base.metadata.create_all(bind=engine)
     Session = sessionmaker(bind=engine)
-    session = Session()
-    person = forecast()
-    session.add(person)
-    session.commit()
